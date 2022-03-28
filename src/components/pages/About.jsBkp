@@ -1,0 +1,68 @@
+import ReactPannellum, { getConfig } from "react-pannellum";
+import gate from "../../panoimg/gate.jpg";
+import entry from "../../panoimg/entry.jpg";
+const About = () => {
+  const config = {
+    autoLoad: true,
+    hotSpotDebug: true,
+    default: {
+      firstScene: "circle",
+      sceneFadeDuration: 1000,
+    },
+    scenes: {
+      circle: {
+        title: "Mason Circle",
+        hfov: 110,
+        pitch: -3,
+        yaw: 117,
+        type: "equirectangular",
+        panorama: entry,
+        hotSpots: [
+          {
+            pitch: -2.7,
+            yaw: -33,
+            type: "scene",
+            text: "Spring House or Dairy",
+            sceneId: "house",
+          },
+        ],
+      },
+
+      house: {
+        title: "Spring House or Dairy",
+        hfov: 110,
+        yaw: 5,
+        type: "equirectangular",
+        panorama: gate,
+        hotSpots: [
+          {
+            pitch: -2.7,
+            yaw: -33,
+            type: "scene",
+            text: "Mason Circle",
+            sceneId: "circle",
+            targetYaw: -23,
+            targetPitch: 2,
+          },
+        ],
+      },
+    },
+  };
+  const click = () => {
+    console.log(getConfig());
+  };
+  return (
+    <div className="vw-100 vh-100">
+      <ReactPannellum
+        id="1"
+        sceneId="scenes"
+        imageSource={gate}
+        config={config}
+      />
+
+      <button onClick={click}>Click me</button>
+    </div>
+  );
+};
+
+export default About;
